@@ -1,17 +1,17 @@
 import { v4 } from 'uuid';
 
 class Appointment {
-    id: string;
+  id: string;
 
-    provider: string;
+  provider: string;
 
-    date: Date;
+  date: Date;
 
-    constructor({ provider, date }: Omit<Appointment, 'id'>) {
-        this.id = v4();
-        this.provider = provider;
-        this.date = date;
-    }
+  constructor({ provider, date }: Omit<Appointment, 'id'>) {
+    this.id = v4();
+    this.provider = provider;
+    this.date = date;
+  }
 }
 
 export default Appointment;
