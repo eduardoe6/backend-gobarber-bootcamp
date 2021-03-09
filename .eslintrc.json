@@ -15,7 +15,10 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "prettier/prettier": "error",
         "semi": 0,
-       "space-before-function-paren": "off"
+        "space-before-function-paren": "off",
+        "class-methods-use-this": "off",
+        "trailing-comma": false
     }
 }
