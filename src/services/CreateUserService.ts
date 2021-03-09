@@ -1,6 +1,6 @@
+import { hash } from 'bcryptjs';
 import { getRepository } from 'typeorm';
 import User from '../models/User';
-import { hash, compare } from 'bcryptjs';
 interface RequestDTO {
   name: string;
   email: string;
