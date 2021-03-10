@@ -1,5 +1,5 @@
-import { Router } from 'express';
-import AuthenticateUserService from '../services/AuthenticateUserService';
+import { Router } from "express";
+import AuthenticateUserService from "../services/AuthenticateUserService";
 
 interface SessionResponseDTO {
   id: string;
@@ -11,7 +11,7 @@ interface SessionResponseDTO {
 
 const sessionsRouter = Router();
 
-sessionsRouter.post('/', async (request, response) => {
+sessionsRouter.post("/", async (request, response) => {
   const { email, password } = request.body;
 
   const authenticateUser = new AuthenticateUserService();

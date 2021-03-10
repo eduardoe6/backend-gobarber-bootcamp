@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from 'express';
-import { verify } from 'jsonwebtoken';
-import authConfig from '../config/auth';
-import AppError from '../errors/AppError';
+import { NextFunction, Request, Response } from "express";
+import { verify } from "jsonwebtoken";
+import authConfig from "../config/auth";
+import AppError from "../errors/AppError";
 
 interface TokenPayloadDTO {
   iat: number;
@@ -17,11 +17,11 @@ export default function ensureAuthenticated(
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
-    throw new AppError('JWT Token is missing.', 401);
+    throw new AppError("JWT Token is missing.", 401);
   }
 
   // Split 'Bearer' and token and get just token
-  const [, token] = authHeader.split(' ');
+  const [, token] = authHeader.split(" ");
 
   try {
     const decoded = verify(token, authConfig.jwt.secret);
@@ -34,6 +34,6 @@ export default function ensureAuthenticated(
 
     return next();
   } catch {
-    throw new AppError('Invalid JWT Token', 401);
+    throw new AppError("Invalid JWT Token", 401);
   }
 }
