@@ -15,15 +15,11 @@ usersRouter.post("/", async (request, response) => {
 
   const user = await createUser.execute({ name, email, password });
 
-  const createUserResponse = {
-    id: user.id,
-    name: user.id,
-    email: user.email,
-    createdAt: user.createdAt,
-    updatedAt: user.updatedAt,
-  };
+  const {id, createdAt, updatedAt} = user;
 
-  return response.json(createUserResponse);
+  const userResponse = {id, name, email, createdAt, updatedAt};
+
+  return response.json(userResponse);
 });
 
 usersRouter.patch(
