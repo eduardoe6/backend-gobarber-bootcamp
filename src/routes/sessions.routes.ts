@@ -16,14 +16,13 @@ sessionsRouter.post("/", async (request, response) => {
 
   const authenticateUser = new AuthenticateUserService();
 
-  const { user, token } = await authenticateUser.execute({ email, password });
-  const { } = user as SessionResponseDTO;
+  const { userData, token } = await authenticateUser.execute({ email, password });
 
-  const {id, name, createdAt, updatedAt} = user;
+  const {id, name, createdAt, updatedAt} = userData;
 
-  const userResponse = {id, name, email, createdAt, updatedAt};
+  const user = {id, name, email, createdAt, updatedAt};
 
-  return response.json({ userResponse, token });
+  return response.json({ user, token });
 });
 
 export default sessionsRouter;

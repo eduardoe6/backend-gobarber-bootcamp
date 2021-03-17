@@ -10,7 +10,7 @@ interface RequestDTO {
 }
 
 interface ResponseDTO {
-  user: User;
+  userData: User;
   token: string;
 }
 
@@ -18,14 +18,14 @@ class AuthenticateUserService {
   public async execute({ email, password }: RequestDTO): Promise<ResponseDTO> {
     const usersRepository = getRepository(User);
 
-    const user = await usersRepository.findOne({ where: { email } });
+    const userData = await usersRepository.findOne({ where: { email } });
 
-    if (!user) {
+    if (!userData) {
       throw new AppError("Incorrect e-mail or password combination", 401);
     }
 
     let passwordMatched = false;
-    if (password === user.password) {
+    if (password === userData.password) {
       passwordMatched = true;
     }
 
@@ -36,11 +36,11 @@ class AuthenticateUserService {
     const { secret, expiresIn } = authConfig.jwt;
 
     const token = sign({}, secret, {
-      subject: user.id,
+      subject: userData.id,
       expiresIn: expiresIn,
     });
 
-    return { user, token };
+    return { userData, token };
   }
 }
 
