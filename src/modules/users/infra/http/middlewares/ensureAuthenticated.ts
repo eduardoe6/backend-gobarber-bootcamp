@@ -3,7 +3,7 @@ import AppError from '@shared/errors/AppError';
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 
-interface TokenPayloadDTO {
+interface ITokenPayloadDTO {
   iat: number;
   exp: number;
   sub: string;
@@ -26,7 +26,7 @@ export default function ensureAuthenticated(
   try {
     const decoded = verify(token, authConfig.jwt.secret);
 
-    const { sub } = decoded as TokenPayloadDTO;
+    const { sub } = decoded as ITokenPayloadDTO;
 
     request.user = {
       id: sub,

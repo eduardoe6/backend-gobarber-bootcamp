@@ -1,4 +1,5 @@
-import AuthenticateUserService from '@modules/users/infra/http/middlewares/ensureAuthenticated';
+import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
+import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
 import { Router } from 'express';
 
 const sessionsRouter = Router();
@@ -6,7 +7,8 @@ const sessionsRouter = Router();
 sessionsRouter.post('/', async (request, response) => {
   const { email, password } = request.body;
 
-  const authenticateUser = new AuthenticateUserService();
+  const usersRepository = new UsersRepository();
+  const authenticateUser = new AuthenticateUserService(usersRepository);
 
   const { userData, token } = await authenticateUser.execute({
     email,
