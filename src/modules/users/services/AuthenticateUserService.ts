@@ -1,5 +1,6 @@
 import authConfig from '@config/auth';
 import User from '@modules/users/infra/typeorm/entities/User';
+import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
 import AppError from '@shared/errors/AppError';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
@@ -18,7 +19,10 @@ interface IResponseDTO {
 @injectable()
 class AuthenticateUserService {
   constructor(
-    @inject('UsersRepository') private usersRepository: IUsersRepository,
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) {}
 
   public async execute({
@@ -31,10 +35,10 @@ class AuthenticateUserService {
       throw new AppError('Incorrect e-mail or password combination', 401);
     }
 
-    let passwordMatched = false;
-    if (password === userData.password) {
-      passwordMatched = true;
-    }
+    const passwordMatched = await this.hashProvider.compareHash(
+      password,
+      userData.password,
+    );
 
     if (!passwordMatched) {
       throw new AppError('Incorrect e-mail or password combination', 401);
